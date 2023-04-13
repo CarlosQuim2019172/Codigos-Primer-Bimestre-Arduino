@@ -38,8 +38,8 @@ void setup() {
 }
 
 void loop() {
-  SW1 = DR(2); //acendente
-  SW2 = DR(3); //descendente
+  SW1 = DR(2); //lee el valor de entrada del SW_1
+  SW2 = DR(3); //lee el valor de entrada del SW_2
     
   if(SW1 == HIGH){
     a = 1;
@@ -60,8 +60,8 @@ void loop() {
   }
   
 
-while(a == 1){
-
+while(a == 1){ //Genera un bucle que se repetira 1 sola vez, activandose cuando precionamos cualquiera de los 2 SW
+               //cunado finalice el case al que nos envio, la variable "a" cambiara para poder cortar el bucle6
 switch(i){
   case(1):
     Serial.println("-----------------------------------");
