@@ -9,11 +9,10 @@ Nombre: Carlos Alexander Quim Chapaz
 Carné: 2019172 
 */
 
-#define LEDB 5
-#define LEDR 4
+#define LEDB 4
+#define LEDR 5
 #define SENSOR 3 
 #define RELE 2
-
 void setup() {
   pinMode(LEDB, OUTPUT);
   pinMode(LEDR, OUTPUT);
@@ -22,15 +21,15 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(SENSOR) == LOW);{
-    digitalWrite(LEDR,LOW);
-    digitalWrite(LEDB,HIGH);
+  if(digitalRead(SENSOR) == HIGH){
+    digitalWrite(LEDR,HIGH);
+    digitalWrite(LEDB,LOW);
     digitalWrite(RELE,HIGH);
   }
 
-  if (digitalRead(SENSOR) == HIGH);{
-    digitalWrite(LEDR,HIGH);
-    digitalWrite(LEDB,LOW);
+  if(digitalRead(SENSOR) == LOW){
+    digitalWrite(LEDR,LOW);
+    digitalWrite(LEDB,HIGH);
     digitalWrite(RELE,LOW);
   }
 }
