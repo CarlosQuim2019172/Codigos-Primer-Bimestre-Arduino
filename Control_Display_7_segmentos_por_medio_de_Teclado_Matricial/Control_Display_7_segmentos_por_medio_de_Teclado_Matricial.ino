@@ -1,3 +1,14 @@
+/*
+Fundación Kinal
+Centro Educativo Técnico Labral Kinal 
+Electrónica
+Grado: Quinto
+Sección: A
+Curso: Taller de Electrónica Digital y Reparación de Computadoras I
+Nombre: Carlos Alexander Quim Chapaz
+Carné: 2019172 
+*/
+
 #include <Keypad.h>
 
 const byte FILAS = 4;
