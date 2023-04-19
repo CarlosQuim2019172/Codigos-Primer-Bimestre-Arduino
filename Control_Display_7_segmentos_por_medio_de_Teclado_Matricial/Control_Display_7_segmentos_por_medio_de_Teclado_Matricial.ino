@@ -27,7 +27,6 @@ Keypad teclado = Keypad(makeKeymap(keys),pinesFilas,pinesColumnas,FILAS,COLUMNAS
 
 char tecla;
 int i , dtime = 2000;
-int coso = 0;
 void setup() {
   Serial.begin(9600);
   for(i=10;i<=17;i++){
