@@ -22,14 +22,14 @@ void setup() {
 
 void loop() {
   if(digitalRead(SENSOR) == HIGH){
-    digitalWrite(LEDR,HIGH);
-    digitalWrite(LEDB,LOW);
+    digitalWrite(LEDR,LOW);
+    digitalWrite(LEDB,HIGH);
     digitalWrite(RELE,HIGH);
   }
 
   if(digitalRead(SENSOR) == LOW){
-    digitalWrite(LEDR,LOW);
-    digitalWrite(LEDB,HIGH);
+    digitalWrite(LEDR,HIGH);
+    digitalWrite(LEDB,LOW);
     digitalWrite(RELE,LOW);
   }
 }
