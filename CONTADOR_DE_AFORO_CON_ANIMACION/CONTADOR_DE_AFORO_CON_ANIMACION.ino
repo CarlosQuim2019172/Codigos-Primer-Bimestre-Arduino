@@ -13,7 +13,7 @@ Carné: 2019172 
 #define ECHO 8                                                  
 #define BUZ 10
 
-int gente; //número de personas
+int gente = 0; //número de personas
 long d; //Variable de distancia en cm
 
 int medicion_Ultrasonico();
@@ -63,7 +63,9 @@ int medicion_Ultrasonico(){
 
 int aforo(){
   if(d >= 6 && d <=10){
-    gente = gente + 1;
+    if(gente>=0 && gente<16){
+      gente = gente + 1;
+    }
     delay(500);
     Serial.println(gente);
   }
@@ -71,10 +73,18 @@ int aforo(){
 }
 
 int contador(int valor){
+  if(valor <=16){
   lcd_quim.setCursor(0,0);
   lcd_quim.print("Aforo:");
+  }
+  
+  if(valor == 16){
   lcd_quim.setCursor(7,0);
   lcd_quim.print(valor);
   lcd_quim.setCursor(0,2);
-  lcd_quim.write(byte(0));    
+  lcd_quim.write(byte(0));
+  tone(BUZ,260);
+  delay(1000);
+  noTone(BUZ);
+  }  
 }
