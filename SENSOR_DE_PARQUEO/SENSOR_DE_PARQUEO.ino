@@ -13,10 +13,10 @@ Carné: 2019172 
 #define TRIG 2
 #define ECHO 3 
 
-long d; //Variable de distancia en cm
+int medidas; //Variable de distancia en cm
 int i,a;
 int medicion_Ultrasonico();
-int distancia(int valor);
+void distancia();
 
 LiquidCrystal_I2C lcd_quim(0x27,16,2); 
 
@@ -44,11 +44,11 @@ void setup() {
 }
 
 void loop() {
-   medicion_Ultrasonico();
-   distancia(d);
+   distancia();
 }
 
 int medicion_Ultrasonico(){
+  long d; //Variable de distancia en cm
   long t; //Variable de tiempo en llegar al ECHO
   digitalWrite(TRIG, HIGH);
   delayMicroseconds(10); //Pulso de 10us
@@ -60,11 +60,12 @@ int medicion_Ultrasonico(){
   return d;
 }
 
-int distancia(int valor){
-  if(valor > 70){
+void distancia(){
+  medidas = medicion_Ultrasonico();
+  if(medidas > 70){
     lcd_quim.clear();
   }
-  switch(valor){
+  switch(medidas){
     case 50:
       lcd_quim.setCursor(7,0);
       lcd_quim.print("50    ");
