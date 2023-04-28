@@ -23,12 +23,11 @@ long d; //Variable de distancia en cm
 int medicion_Ultrasonico();
 int distancia(int valor);
 
-LiquidCrystal_I2C lcd_quim(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd_quim(0x27,16,2); 
 
 void setup() {
   Serial.begin(9600);
-  lcd_quim.init();                      // initialize the lcd 
-  // Print a message to the LCD.
+  lcd_quim.init(); 
   lcd_quim.backlight();
   pinMode(LEDR,OUTPUT);
   pinMode(LEDA,OUTPUT);
