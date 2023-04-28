@@ -9,9 +9,9 @@ Nombre: Carlos Alexander Quim Chapaz
 Carné: 2019172 
 */
 #include <LiquidCrystal.h>
-#define TRIG 9
-#define ECHO 8                                                  
-#define BUZ 10
+#define TRIG 2
+#define ECHO 4                                                  
+#define BUZ 3
 
 int gente = 0; //número de personas
 long d; //Variable de distancia en cm
@@ -20,7 +20,7 @@ int medicion_Ultrasonico();
 int aforo();
 int contador(int valor);
 
-LiquidCrystal lcd_quim(2,3,4,5,6,7);
+LiquidCrystal lcd_quim(5,6,7,8,9,10);
 
 byte customChar[] = {
   B01110,
