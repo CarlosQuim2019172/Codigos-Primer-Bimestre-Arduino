@@ -90,6 +90,9 @@ int distancia(int valor){
       digitalWrite(LEDB, HIGH);
       digitalWrite(LEDR, LOW);
       digitalWrite(LEDV, HIGH);
+      tone(BUZ,800,5000);
+      delay(100);
+      noTone(BUZ);
   }
 
   if(valor >= 5 && valor < 15){
@@ -101,5 +104,8 @@ int distancia(int valor){
       digitalWrite(LEDA, HIGH);
       digitalWrite(LEDB, HIGH);
       digitalWrite(LEDV, HIGH);
+      tone(BUZ,200,10000);
+      delay(100);
+      noTone(BUZ);
   }
 }
