@@ -33,10 +33,22 @@ byte customChar[] = {
   B10001
 };
 
+byte customChar1[] = {
+  B01110,
+  B01110,
+  B01110,
+  B10101,
+  B01110,
+  B00100,
+  B01010,
+  B10001
+};
+
 void setup() {
   Serial.begin(9600);
   lcd_quim.begin(16,2);
   lcd_quim.createChar(0, customChar);
+  lcd_quim.createChar(1, customChar1);
   lcd_quim.home();
   pinMode(BUZ, OUTPUT);
   pinMode(TRIG, OUTPUT);
@@ -63,8 +75,8 @@ int medicion_Ultrasonico(){
 
 int aforo(){
   if(d >= 6 && d <=10){
-    if(gente>=0 && gente<16){
-      gente = gente + 1;
+    if(gente < 16){
+    gente = gente + 1;
     }
     delay(500);
     Serial.println(gente);
@@ -76,15 +88,18 @@ int contador(int valor){
   if(valor <=16){
   lcd_quim.setCursor(0,0);
   lcd_quim.print("Aforo:");
+  lcd_quim.setCursor(7,0);
+  lcd_quim.print(valor);
   }
   
   if(valor == 16){
-  lcd_quim.setCursor(7,0);
-  lcd_quim.print(valor);
   lcd_quim.setCursor(0,2);
   lcd_quim.write(byte(0));
+  delay(500);
+  lcd_quim.setCursor(0,2);
+  lcd_quim.write(byte(1));
   tone(BUZ,260);
-  delay(1000);
+  delay(500);
   noTone(BUZ);
   }  
 }
