@@ -69,9 +69,7 @@ int distancia(int valor){
       lcd_quim.setCursor(7,0);
       lcd_quim.print("50    ");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("     ");
-      lcd_quim.setCursor(5,1);
-      lcd_quim.print("LIBRES  ");
+      lcd_quim.print("     LIBRES     ");
       i = 0;
       a = 13;
       for(i == 0; i <=2; i++){
@@ -89,8 +87,8 @@ int distancia(int valor){
     case 30:
       lcd_quim.setCursor(7,0);
       lcd_quim.print("30  ");
-      lcd_quim.setCursor(4,1);
-      lcd_quim.print("Cuidado!");
+      lcd_quim.setCursor(0,1);
+      lcd_quim.print("    Cuidado!     ");
       i = 0;
       a = 11;
       for(i == 0; i <=4; i++){
@@ -109,9 +107,7 @@ int distancia(int valor){
       lcd_quim.setCursor(7,0);
       lcd_quim.print("10");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("     ");
-      lcd_quim.setCursor(5,1);
-      lcd_quim.print("Alto!! ");
+      lcd_quim.print("     Alto!!     ");
       i = 0;
       a = 9;
       for(i == 0; i <=6; i++){
