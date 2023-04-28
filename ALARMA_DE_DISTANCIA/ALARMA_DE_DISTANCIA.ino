@@ -61,9 +61,9 @@ int medicion_Ultrasonico(){
 int distancia(int valor){
   if(valor > 45){
       lcd_quim.setCursor(0,0);
-      lcd_quim.print("Fuera de             ");
+      lcd_quim.print("Fuera de        ");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("Alcance            ");
+      lcd_quim.print("Alcance         ");
       digitalWrite(LEDB, HIGH);
       digitalWrite(LEDA, LOW);
       digitalWrite(LEDR, LOW);
@@ -72,9 +72,9 @@ int distancia(int valor){
   
   if(valor >= 30 && valor < 45){
       lcd_quim.setCursor(0,0);
-      lcd_quim.print("Persona/Objeto          ");
+      lcd_quim.print("Persona/Objeto  ");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("Acercandose          ");
+      lcd_quim.print("Acercandose     ");
       digitalWrite(LEDV, HIGH);
       digitalWrite(LEDA, LOW);
       digitalWrite(LEDR, LOW);
@@ -83,9 +83,9 @@ int distancia(int valor){
   
   if(valor >= 15 && valor < 30){
       lcd_quim.setCursor(0,0);
-      lcd_quim.print("Cuidado!!!       ");
+      lcd_quim.print("Cuidado!!!      ");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("Espacio Privado        ");
+      lcd_quim.print("Espacio Privado ");
       digitalWrite(LEDA, HIGH);
       digitalWrite(LEDB, LOW);
       digitalWrite(LEDR, LOW);
@@ -94,9 +94,9 @@ int distancia(int valor){
 
   if(valor >= 5 && valor < 15){
       lcd_quim.setCursor(0,0);
-      lcd_quim.print("Invadiendo!!!           ");
+      lcd_quim.print("Invadiendo!!!   ");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("Espacio Privado           ");
+      lcd_quim.print("Espacio Privado ");
       digitalWrite(LEDR, HIGH);
       digitalWrite(LEDA, LOW);
       digitalWrite(LEDB, LOW);
