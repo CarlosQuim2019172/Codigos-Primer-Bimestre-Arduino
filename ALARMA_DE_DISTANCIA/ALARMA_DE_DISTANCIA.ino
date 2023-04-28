@@ -78,7 +78,7 @@ int distancia(int valor){
       digitalWrite(LEDV, HIGH);
       digitalWrite(LEDA, LOW);
       digitalWrite(LEDR, LOW);
-      digitalWrite(LEDB, LOW);
+      digitalWrite(LEDB, HIGH);
   }
   
   if(valor >= 15 && valor < 30){
@@ -87,9 +87,9 @@ int distancia(int valor){
       lcd_quim.setCursor(0,1);
       lcd_quim.print("Espacio Privado ");
       digitalWrite(LEDA, HIGH);
-      digitalWrite(LEDB, LOW);
+      digitalWrite(LEDB, HIGH);
       digitalWrite(LEDR, LOW);
-      digitalWrite(LEDV, LOW);
+      digitalWrite(LEDV, HIGH);
   }
 
   if(valor >= 5 && valor < 15){
@@ -98,8 +98,8 @@ int distancia(int valor){
       lcd_quim.setCursor(0,1);
       lcd_quim.print("Espacio Privado ");
       digitalWrite(LEDR, HIGH);
-      digitalWrite(LEDA, LOW);
-      digitalWrite(LEDB, LOW);
-      digitalWrite(LEDV, LOW);
+      digitalWrite(LEDA, HIGH);
+      digitalWrite(LEDB, HIGH);
+      digitalWrite(LEDV, HIGH);
   }
 }
