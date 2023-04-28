@@ -89,7 +89,7 @@ void distancia(){
       lcd_quim.setCursor(7,0);
       lcd_quim.print("30  ");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("    Cuidado!     ");
+      lcd_quim.print("    CUIDADO!     ");
       i = 0;
       a = 11;
       for(i == 0; i <=4; i++){
@@ -108,7 +108,7 @@ void distancia(){
       lcd_quim.setCursor(7,0);
       lcd_quim.print("10");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("     Alto!!     ");
+      lcd_quim.print("     ALTO!!     ");
       i = 0;
       a = 9;
       for(i == 0; i <=6; i++){
