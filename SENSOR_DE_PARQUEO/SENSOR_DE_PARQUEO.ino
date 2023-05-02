@@ -13,10 +13,10 @@ Carné: 2019172 
 #define TRIG 2
 #define ECHO 3 
 
-long d; //Variable de distancia en cm
+int medidas; //Variable de distancia en cm
 int i,a;
 int medicion_Ultrasonico();
-int distancia(int valor);
+void distancia();
 
 LiquidCrystal_I2C lcd_quim(0x27,16,2); 
 
@@ -44,11 +44,11 @@ void setup() {
 }
 
 void loop() {
-   medicion_Ultrasonico();
-   distancia(d);
+   distancia();
 }
 
 int medicion_Ultrasonico(){
+  long d; //Variable de distancia en cm
   long t; //Variable de tiempo en llegar al ECHO
   digitalWrite(TRIG, HIGH);
   delayMicroseconds(10); //Pulso de 10us
@@ -60,18 +60,17 @@ int medicion_Ultrasonico(){
   return d;
 }
 
-int distancia(int valor){
-  if(valor > 70){
+void distancia(){
+  medidas = medicion_Ultrasonico();
+  if(medidas > 70){
     lcd_quim.clear();
   }
-  switch(valor){
+  switch(medidas){
     case 50:
       lcd_quim.setCursor(7,0);
       lcd_quim.print("50    ");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("     ");
-      lcd_quim.setCursor(5,1);
-      lcd_quim.print("LIBRES  ");
+      lcd_quim.print("     LIBRES     ");
       i = 0;
       a = 13;
       for(i == 0; i <=2; i++){
@@ -89,8 +88,8 @@ int distancia(int valor){
     case 30:
       lcd_quim.setCursor(7,0);
       lcd_quim.print("30  ");
-      lcd_quim.setCursor(4,1);
-      lcd_quim.print("Cuidado!");
+      lcd_quim.setCursor(0,1);
+      lcd_quim.print("    CUIDADO!     ");
       i = 0;
       a = 11;
       for(i == 0; i <=4; i++){
@@ -109,9 +108,7 @@ int distancia(int valor){
       lcd_quim.setCursor(7,0);
       lcd_quim.print("10");
       lcd_quim.setCursor(0,1);
-      lcd_quim.print("     ");
-      lcd_quim.setCursor(5,1);
-      lcd_quim.print("Alto!! ");
+      lcd_quim.print("     ALTO!!     ");
       i = 0;
       a = 9;
       for(i == 0; i <=6; i++){

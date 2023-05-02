@@ -18,10 +18,10 @@ Carné: 2019172 
 #define LEDV 6
 #define LEDB 7
 
-long d; //Variable de distancia en cm
+int medidas; //Variable de distancia en cm
 
 int medicion_Ultrasonico();
-int distancia(int valor);
+void distancia();
 
 LiquidCrystal_I2C lcd_quim(0x27,16,2); 
 
@@ -41,12 +41,12 @@ void setup() {
 }
 
 void loop() {
-   distancia(d);
-   medicion_Ultrasonico();
+   distancia();
 }
 
 int medicion_Ultrasonico(){
   long t; //Variable de tiempo en llegar al ECHO
+  long d; //Variable de distancia en cm
   digitalWrite(TRIG, HIGH);
   delayMicroseconds(10); //Pulso de 10us
   digitalWrite(TRIG, LOW);
@@ -57,8 +57,9 @@ int medicion_Ultrasonico(){
   return d;
 }
 
-int distancia(int valor){
-  if(valor > 45){
+void distancia(){
+  medidas = medicion_Ultrasonico();
+  if(medidas > 45){
       lcd_quim.setCursor(0,0);
       lcd_quim.print("Fuera de        ");
       lcd_quim.setCursor(0,1);
@@ -69,7 +70,7 @@ int distancia(int valor){
       digitalWrite(LEDV, LOW); 
   }
   
-  if(valor >= 30 && valor < 45){
+  if(medidas >= 30 && medidas < 45){
       lcd_quim.setCursor(0,0);
       lcd_quim.print("Persona/Objeto  ");
       lcd_quim.setCursor(0,1);
@@ -80,7 +81,7 @@ int distancia(int valor){
       digitalWrite(LEDB, HIGH);
   }
   
-  if(valor >= 15 && valor < 30){
+  if(medidas >= 15 && medidas < 30){
       lcd_quim.setCursor(0,0);
       lcd_quim.print("Cuidado!!!      ");
       lcd_quim.setCursor(0,1);
@@ -94,7 +95,7 @@ int distancia(int valor){
       noTone(BUZ);
   }
 
-  if(valor >= 5 && valor < 15){
+  if(medidas >= 5 && medidas < 15){
       lcd_quim.setCursor(0,0);
       lcd_quim.print("Invadiendo!!!   ");
       lcd_quim.setCursor(0,1);
