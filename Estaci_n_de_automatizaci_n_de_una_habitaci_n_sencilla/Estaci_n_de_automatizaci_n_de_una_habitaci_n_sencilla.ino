@@ -38,6 +38,7 @@ int sensortC();
 void temperatura();
 void radar();
 void puerta();
+void luminarias();
 
 int TempC;
 
@@ -118,27 +119,6 @@ byte encendido[] = {
   B00000
 };
 
-byte abierto[] = {
-  B11111,
-  B10001,
-  B10001,
-  B10001,
-  B10011,
-  B10001,
-  B10001,
-  B11111
-};
-
-byte cerrado[] = {
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11101,
-  B11111,
-  B11111,
-  B11111
-};
 void setup() {
   Serial.begin(9600);
   lcd_quim.init();  
@@ -153,9 +133,8 @@ void setup() {
   lcd_quim.createChar(4, arriba);
   lcd_quim.createChar(5, apagado);
   lcd_quim.createChar(6, encendido);
-  lcd_quim.createChar(7, abierto);
-  lcd_quim.createChar(8, cerrado);
   lcd_quim.home();
+  myservo.write(0);
   pines();
 }
 
@@ -163,6 +142,7 @@ void loop() {
   temperatura();
   radar();
   puerta();
+  luminarias();
 }
 
 void pines(){
@@ -175,7 +155,9 @@ void pines(){
   pinMode(RADAR,INPUT);
   pinMode(PUSH1,INPUT);
   pinMode(PUSH2,INPUT);
-  pinMode(PUSH3,INPUT);  
+  pinMode(PUSH3,INPUT);
+  digitalWrite(RELE1,HIGH);
+  digitalWrite(RELE2,HIGH);
 }
 
 int sensortC(){
@@ -257,17 +239,52 @@ void radar(){
 }
 
 void puerta(){
+  int PUSH_3 = digitalRead(PUSH3);
   
-  int PUSH_1 = digitalRead(PUSH1);
-  
-  lcd_quim.setCursor(7,0);
+  lcd_quim.setCursor(8,1);
   lcd_quim.print("P:");
 
-  if(PUSH_1 == HIGH){
-    
+  if(PUSH_3 == HIGH){
+    lcd_quim.setCursor(10,1);
+    lcd_quim.print("OPEN ");
+    myservo.write(90);   
+  }else{
+    lcd_quim.setCursor(10,1);
+    lcd_quim.print("CLOSE");
+    myservo.write(0);                                  
   }
-  
+}
+
+void luminarias(){
+  int PUSH_1 = digitalRead(PUSH1);
+  int PUSH_2 = digitalRead(PUSH2);
 
   
   
+  
+  lcd_quim.setCursor(7,0);
+  lcd_quim.print("L1:");
+  lcd_quim.setCursor(10,0);
+  lcd_quim.write(byte(5));
+  lcd_quim.setCursor(12,0);
+  lcd_quim.print("L2:");
+  lcd_quim.setCursor(15,0);
+  lcd_quim.write(byte(5));
+
+  if(PUSH_1 == HIGH){
+    lcd_quim.setCursor(10,0);
+    lcd_quim.write(byte(6));
+    digitalWrite(RELE1,LOW);
+  }else{
+    digitalWrite(RELE1,HIGH);
+  }
+
+  if(PUSH_2 == HIGH){
+    lcd_quim.setCursor(15,0);
+    lcd_quim.write(byte(6));
+    digitalWrite(RELE2,LOW);
+  }else{
+    digitalWrite(RELE2,HIGH);
+  }
+                                      
 }
