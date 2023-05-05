@@ -15,6 +15,7 @@ Carné: 2019172 
 #include <LiquidCrystal_I2C.h>
 
 #define NUMPIXELS 7 // definimos la cantidad da leds del NEOPIXEL
+#define CDS 15
 #define RADAR 14
 #define PUSH3 13
 #define PUSH2 12
@@ -241,7 +242,9 @@ void puerta(){
     myservo.write(90); 
     delay(500);
     value = 1; 
-  }else if(digitalRead(PUSH3) && value == 1){
+  }
+  
+  if(digitalRead(PUSH3) && value == 1){
     lcd_quim.setCursor(10,1);
     lcd_quim.print("CLOSE");
     myservo.write(0); 
@@ -250,28 +253,36 @@ void puerta(){
   }
 }
 
-void luminarias(){
+void luminarias(){  
   if(digitalRead(PUSH1) && value1 == 0){
+    digitalWrite(RELE1,LOW);
     lcd_quim.setCursor(10,0);
     lcd_quim.write(byte(6));
-    digitalWrite(RELE1,LOW);
+    delay(500); 
     value1 = 1;
-  }else if(digitalRead(PUSH1) && value1 == 1){
+  }
+  
+  if(digitalRead(PUSH1) && value1 == 1){
     digitalWrite(RELE1,HIGH);
     lcd_quim.setCursor(10,0);
     lcd_quim.write(byte(5));
+    delay(500); 
     value1 = 0;
   }
 
   if(digitalRead(PUSH2) && value2 == 0){
+    digitalWrite(RELE2,LOW);
     lcd_quim.setCursor(15,0);
     lcd_quim.write(byte(6));
-    digitalWrite(RELE2,LOW);
+    delay(500); 
     value2 = 1;
-  }else if(digitalRead(PUSH2) && value2 == 1){
+  }
+  
+  if(digitalRead(PUSH2) && value2 == 1){
     digitalWrite(RELE2,HIGH);
     lcd_quim.setCursor(15,0);
     lcd_quim.write(byte(5));
+    delay(500); 
     value2 = 0;
   }                                
 }
@@ -300,6 +311,4 @@ void pantallainicial(){
   lcd_quim.print("P:");
   lcd_quim.setCursor(10,1);
   lcd_quim.print("CLOSE");
-
-  // 
 }
