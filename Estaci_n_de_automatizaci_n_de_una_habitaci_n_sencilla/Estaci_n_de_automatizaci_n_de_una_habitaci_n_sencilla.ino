@@ -20,7 +20,7 @@ Carné: 2019172 
 #define PUSH3 13
 #define PUSH2 12
 #define PUSH1 11
-#define BUZ 10
+#define BUZ 9
 #define LEDR 7 
 #define LEDB 5
 #define LEDG 6 
@@ -127,7 +127,7 @@ void setup() {
   lcd_quim.backlight();
   sensor.begin();   //Se inicia el sensor
   pixels.begin();
-  myservo.attach(9);
+  myservo.attach(10);
   lcd_quim.createChar(0, caliente);
   lcd_quim.createChar(1, frio); 
   lcd_quim.createChar(2, templado);
@@ -201,17 +201,15 @@ void temperatura(){
 
 void radar(){
   int estado = digitalRead(RADAR);
-
-  if(estado == LOW){
-    // personas con brazos abajo
-    lcd_quim.setCursor(6,1);
-    lcd_quim.write(byte(3));
-    for(int i =0; i<8; i++){
+ 
+   // personas con brazos abajo
+   lcd_quim.setCursor(6,1);
+   lcd_quim.write(byte(3));
+   for(int i =0; i<8; i++){
       pixels.setPixelColor(i,pixels.Color(0,0,255));
       pixels.show();  
-    } 
-  }
-  
+   }
+ 
   if(estado == HIGH){
     // personas con brazos abajo
     lcd_quim.setCursor(6,1);
@@ -236,15 +234,14 @@ void radar(){
 }
 
 void puerta(){
+
   if(digitalRead(PUSH3) && value == 0){
     lcd_quim.setCursor(10,1);
     lcd_quim.print("OPEN ");
     myservo.write(90); 
     delay(500);
     value = 1; 
-  }
-  
-  if(digitalRead(PUSH3) && value == 1){
+  }else if(digitalRead(PUSH3) && value == 1){
     lcd_quim.setCursor(10,1);
     lcd_quim.print("CLOSE");
     myservo.write(0); 
