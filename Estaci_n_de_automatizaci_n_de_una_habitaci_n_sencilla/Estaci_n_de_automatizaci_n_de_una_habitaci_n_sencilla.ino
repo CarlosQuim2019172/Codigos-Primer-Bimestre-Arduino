@@ -39,8 +39,9 @@ void temperatura();
 void radar();
 void puerta();
 void luminarias();
+void pantallainicial();
 
-int TempC;
+int TempC, value = 0, value1 = 0, value2 = 0;
 
 byte caliente[] = {
   B00000,
@@ -136,6 +137,7 @@ void setup() {
   lcd_quim.home();
   myservo.write(0);
   pines();
+  pantallainicial();
 }
 
 void loop() {
@@ -171,9 +173,6 @@ void temperatura(){
   TempC = sensortC();
   Serial.println(TempC);
  
-  lcd_quim.setCursor(0,0);
-  lcd_quim.print("TEMP: ");
-
   if(TempC >= 21 && TempC <= 25){
     digitalWrite(LEDR,LOW);
     digitalWrite(LEDG,HIGH);
@@ -200,12 +199,9 @@ void temperatura(){
 }
 
 void radar(){
-  int value = digitalRead(RADAR);
-  lcd_quim.setCursor(0,1);
-  lcd_quim.print("RADAR: ");
+  int estado = digitalRead(RADAR);
 
-
-  if(value == LOW){
+  if(estado == LOW){
     // personas con brazos abajo
     lcd_quim.setCursor(6,1);
     lcd_quim.write(byte(3));
@@ -215,7 +211,7 @@ void radar(){
     } 
   }
   
-  if(value == HIGH){
+  if(estado == HIGH){
     // personas con brazos abajo
     lcd_quim.setCursor(6,1);
     lcd_quim.write(byte(3));
@@ -239,26 +235,53 @@ void radar(){
 }
 
 void puerta(){
-  int PUSH_3 = digitalRead(PUSH3);
-  
-  lcd_quim.setCursor(8,1);
-  lcd_quim.print("P:");
-
-  if(PUSH_3 == HIGH){
+  if(digitalRead(PUSH3) && value == 0){
     lcd_quim.setCursor(10,1);
     lcd_quim.print("OPEN ");
-    myservo.write(90);   
-  }else{
+    myservo.write(90); 
+    delay(500);
+    value = 1; 
+  }else if(digitalRead(PUSH3) && value == 1){
     lcd_quim.setCursor(10,1);
     lcd_quim.print("CLOSE");
-    myservo.write(0);                                  
+    myservo.write(0); 
+    delay(500); 
+    value = 0;                                                       
   }
 }
 
 void luminarias(){
-  int PUSH_1 = digitalRead(PUSH1);
-  int PUSH_2 = digitalRead(PUSH2);
-   
+  if(digitalRead(PUSH1) && value1 == 0){
+    lcd_quim.setCursor(10,0);
+    lcd_quim.write(byte(6));
+    digitalWrite(RELE1,LOW);
+    value1 = 1;
+  }else if(digitalRead(PUSH1) && value1 == 1){
+    digitalWrite(RELE1,HIGH);
+    lcd_quim.setCursor(10,0);
+    lcd_quim.write(byte(5));
+    value1 = 0;
+  }
+
+  if(digitalRead(PUSH2) && value2 == 0){
+    lcd_quim.setCursor(15,0);
+    lcd_quim.write(byte(6));
+    digitalWrite(RELE2,LOW);
+    value2 = 1;
+  }else if(digitalRead(PUSH2) && value2 == 1){
+    digitalWrite(RELE2,HIGH);
+    lcd_quim.setCursor(15,0);
+    lcd_quim.write(byte(5));
+    value2 = 0;
+  }                                
+}
+
+void pantallainicial(){
+  // Temperatura
+  lcd_quim.setCursor(0,0);
+  lcd_quim.print("TEMP: ");
+
+  // Luminarias
   lcd_quim.setCursor(7,0);
   lcd_quim.print("L1:");
   lcd_quim.setCursor(10,0);
@@ -267,21 +290,16 @@ void luminarias(){
   lcd_quim.print("L2:");
   lcd_quim.setCursor(15,0);
   lcd_quim.write(byte(5));
+  
+  // Radar
+  lcd_quim.setCursor(0,1);
+  lcd_quim.print("RADAR: ");
+    
+  // Puerta 
+  lcd_quim.setCursor(8,1);
+  lcd_quim.print("P:");
+  lcd_quim.setCursor(10,1);
+  lcd_quim.print("CLOSE");
 
-  if(PUSH_1 == HIGH){
-    lcd_quim.setCursor(10,0);
-    lcd_quim.write(byte(6));
-    digitalWrite(RELE1,LOW);
-  }else{
-    digitalWrite(RELE1,HIGH);
-  }
-
-  if(PUSH_2 == HIGH){
-    lcd_quim.setCursor(15,0);
-    lcd_quim.write(byte(6));
-    digitalWrite(RELE2,LOW);
-  }else{
-    digitalWrite(RELE2,HIGH);
-  }
-                                      
+  // 
 }
