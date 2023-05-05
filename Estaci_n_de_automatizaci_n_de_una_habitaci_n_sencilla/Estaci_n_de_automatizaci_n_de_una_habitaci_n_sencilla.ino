@@ -15,7 +15,6 @@ Carné: 2019172 
 #include <LiquidCrystal_I2C.h>
 
 #define NUMPIXELS 7 // definimos la cantidad da leds del NEOPIXEL
-#define CDS 15
 #define RADAR 14
 #define PUSH3 13
 #define PUSH2 12
@@ -241,7 +240,9 @@ void puerta(){
     myservo.write(90); 
     delay(500);
     value = 1; 
-  }else if(digitalRead(PUSH3) && value == 1){
+  }
+  
+  if(digitalRead(PUSH3) && value == 1){
     lcd_quim.setCursor(10,1);
     lcd_quim.print("CLOSE");
     myservo.write(0); 
