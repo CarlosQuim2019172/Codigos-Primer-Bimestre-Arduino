@@ -258,10 +258,7 @@ void puerta(){
 void luminarias(){
   int PUSH_1 = digitalRead(PUSH1);
   int PUSH_2 = digitalRead(PUSH2);
-
-  
-  
-  
+   
   lcd_quim.setCursor(7,0);
   lcd_quim.print("L1:");
   lcd_quim.setCursor(10,0);
