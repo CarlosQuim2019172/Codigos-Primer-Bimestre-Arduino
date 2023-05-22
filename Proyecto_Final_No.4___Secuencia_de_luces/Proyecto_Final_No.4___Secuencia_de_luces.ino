@@ -34,6 +34,7 @@ void grupal();
 
 // Declaración de funciones
 void colorespixel();
+void grupo_patrones();
 
 // Inicialización de objeto
 Adafruit_NeoPixel pixels(NUMPIXELS, NEO, NEO_GRB + NEO_KHZ800);
@@ -54,14 +55,11 @@ byte pinesColumnas[COLUMNAS] = {5,4,3,2};
 // Inicialización de objeto
 Keypad keypad = Keypad(makeKeymap(keys),pinesFilas,pinesColumnas,FILAS,COLUMNAS);
 
-// Variable global de color
+// Variables globales
 uint32_t color = RED;
-
-int a = 0;
 
 void setup() {
   pixels.begin(); // Inicializa el Neopixel
-  pixels.setBrightness(50); //Le establecemos intesidad al LED
   pixels.show(); // Inicializa todos los píxeles en apagado
 
 }
@@ -69,6 +67,30 @@ void setup() {
 void loop() {  
   char key = keypad.getKey();
   switch(key) {
+      case 'A':
+        for(int a = 0; a < 5; a++){
+          ascendente();      
+        }
+        break;
+      case 'B': 
+        for(int b = 0; b < 5; b++){
+          descendente();
+        }
+        break;
+      case 'D':
+        for(int d = 0; d < 5
+        ; d++){
+          alternancia();
+        }
+      case '0':
+        colorespixel();
+        break;
+  }
+}
+
+void colorespixel(){  
+  char key1 = keypad.waitForKey();
+    switch (key1) { // Comprueba la tecla presionada y establece el color correspondiente
       case '1':
         color =  RED;
         break;
@@ -90,18 +112,14 @@ void loop() {
       case '7':
         color = LIM;
         break;
-      case 'A':
-        ascendente();
-        break;
-      case 'B': 
-        descendente();
-        break;
-      case 'C':
-        alternancia();
-        break;
-  }
+    }  
 }
 
+void grupo_patrones(){
+  pixels.clear(); // Apaga todos los píxeles
+  pixels.show(); // Actualiza la tira
+  delay(500); // Espera un poco para el cambio de patrón
+}
 
 //Secuencias
 void ascendente(){ 
