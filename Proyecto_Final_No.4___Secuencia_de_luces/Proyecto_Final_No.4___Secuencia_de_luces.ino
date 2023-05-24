@@ -155,9 +155,9 @@ void colorespixel(){  //función donde seleccionamos el color dependiendo de la 
       break;
     case '*':
       lcd.setCursor(0,0);
-      lcd.print("--SE REPITE :D--");
+      lcd.print("-ESCOJE OTRA :D-");
       lcd.setCursor(0,1);
-      lcd.print(">>>>EL COLOR<<<<");
+      lcd.print(">>SECUENCIA :)<<");
       color = color;
       delay(2000);
       x = 2;      
