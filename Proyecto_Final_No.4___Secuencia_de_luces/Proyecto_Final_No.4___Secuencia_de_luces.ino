@@ -5,15 +5,14 @@ Electrónica
 Grado: Quinto
 Sección: A
 Curso: Taller de Electrónica Digital y Reparación de Computadoras I
-Nombre: Carlos Alexander Quim Chapaz
-Carné: 2019172 
+Nombre: Grupo ?
 */
+//Incluimos las librerias necesarias
 #include <Keypad.h>
 #include <Adafruit_NeoPixel.h>
 #include <LiquidCrystal_I2C.h>
-#define NUMPIXELS 14 // definimos la cantidad da leds del NEOPIXEL
-#define NEO 14
-#define BUZ 10
+#define NUMPIXELS 33 // definimos la cantidad da leds del NEOPIXEL
+#define NEO 14 // definimos el pin del neopixel
 
 enum NeoColor { // Definir los colores posibles
   RED = 0xFF0000,
@@ -22,26 +21,25 @@ enum NeoColor { // Definir los colores posibles
   YELLOW = 0xFFFF00,
   MAGENTA = 0xFF00FF,
   CYAN = 0x00FFFF,
-  LIM = 0xFFF33
+  AQUA = 0xFFF33
 };
 
-// Declaración de patrones
+// Declaración de funciones de cada secuencia
 void ascendente();
 void descendente();
 void auto_fantastico();
 void alternancia();
 void grupal();
 
-// Declaración de funciones
+// Declaración de funciones para el menu
 void colorespixel();
-void grupo_patrones();
+void grupo_secuencias();
 
-// Inicialización de objeto
+// Inicialización de objetos
 Adafruit_NeoPixel pixels(NUMPIXELS, NEO, NEO_GRB + NEO_KHZ800);
+LiquidCrystal_I2C lcd(0x27,16,2);
 
 // Inicialización de objeto
-LiquidCrystal_I2C lcd_proyecto(0x27,16,2);
-
 const byte FILAS = 4;
 const byte COLUMNAS = 4;
 char keys[FILAS][COLUMNAS]={
@@ -52,125 +50,276 @@ char keys[FILAS][COLUMNAS]={
 };
 byte pinesFilas[FILAS] = {9,8,7,6};
 byte pinesColumnas[COLUMNAS] = {5,4,3,2};
-// Inicialización de objeto
 Keypad keypad = Keypad(makeKeymap(keys),pinesFilas,pinesColumnas,FILAS,COLUMNAS);
 
 // Variables globales
-uint32_t color = RED;
+unsigned long color;
+char key;
+int x = 1; 
 
 void setup() {
+  Serial.begin(9600);
+  lcd.init(); //inicio la comunicacion serial con el modulo i2c
+  lcd.backlight(); //Enciendo la luz de fondo para poder ver el texto
+  lcd.setCursor(0,0);
+  lcd.print(">>BIENVENIDO A<<");
+  lcd.setCursor(0,1);
+  lcd.print(">>LA DISCOTECA<<");
+  delay(3000);
   pixels.begin(); // Inicializa el Neopixel
-  pixels.show(); // Inicializa todos los píxeles en apagado
-
+  pixels.show();
 }
 
-void loop() {  
-  char key = keypad.getKey();
+void loop(){    
+  if(x == 1){ //aqui realizamos el llamado de la función para poder escojer el color
+    colorespixel();
+  }
+  if(x == 2){ //luego de escoger el color llamamos la función para elejir la secuencia
+    grupo_secuencias();
+  } 
+}
+
+//Funciones para realizar las acciones del proyecto
+
+void colorespixel(){  //función donde seleccionamos el color dependiendo de la tecla seleccionada
+  key = keypad.getKey(); // Comprueba la tecla presionada y establece el color correspondiente
+  
+  lcd.setCursor(0,0);
+  lcd.print(">>>>ELIJA SU<<<<");
+  lcd.setCursor(0,1);
+  lcd.print(">>>>COLOR :b<<<<"); 
+  
+  switch (key) { 
+    case '1':
+      lcd.setCursor(0,0);
+      lcd.print("----COLOR :D----");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>>>ROJO<<<<<<");
+      color =  RED;
+      delay(2000);
+      x = 2;
+      break;
+    case '2':
+      lcd.setCursor(0,0);
+      lcd.print("----COLOR :D----");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>>VERDE<<<<<<");
+      color = GREEN;
+      delay(2000);
+      x = 2;
+      break;
+    case '3':
+      lcd.setCursor(0,0);
+      lcd.print("----COLOR :D----");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>>>AZUL<<<<<<");
+      color = BLUE;
+      delay(2000);
+      x = 2;
+      break;
+    case '4':
+      lcd.setCursor(0,0);
+      lcd.print("----COLOR :D----");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>AMARILLO<<<<");
+      color = YELLOW;
+      delay(2000);
+      x = 2;
+      break;
+    case '5':
+      lcd.setCursor(0,0);
+      lcd.print("----COLOR :D----");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>MAGENTA<<<<<");
+      color = MAGENTA;
+      delay(2000);
+      x = 2;
+      break;
+    case '6':
+      lcd.setCursor(0,0);
+      lcd.print("----COLOR :D----");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>>>CIAN<<<<<<");
+      color = CYAN;
+      delay(2000);
+      x = 2;
+      break;
+    case '7':
+      lcd.setCursor(0,0);
+      lcd.print("----COLOR :D----");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>>>AQUA<<<<<<");
+      color = AQUA;
+      delay(2000);
+      x = 2;
+      break;
+    case '*':
+      lcd.setCursor(0,0);
+      lcd.print("--SE REPITE :D--");
+      lcd.setCursor(0,1);
+      lcd.print(">>>>EL COLOR<<<<");
+      color = color;
+      delay(2000);
+      x = 2;      
+  }  
+}
+
+void grupo_secuencias(){ //función donde seleccionamos la secuencia dependiendo de la tecla seleccionada
+  key = keypad.getKey();
+
+  lcd.setCursor(0,0);
+  lcd.print(">>>>ELIJA SU<<<<");
+  lcd.setCursor(0,1);
+  lcd.print(">>SECUENCIA :b<<");
+  
   switch(key) {
       case 'A':
-        for(int a = 0; a < 5; a++){
+        for(int a = 0; a < 8; a++){
           ascendente();      
         }
+        delay(100);
+        x = 1;
         break;
-      case 'B': 
-        for(int b = 0; b < 5; b++){
+      case 'B':
+        for(int b = 0; b < 8; b++){
           descendente();
         }
+        delay(1000);
+        x = 1;
+        break;
+      case 'C':
+        for(int b = 0; b < 8; b++){
+          auto_fantastico();
+        }
+        delay(1000);
+        x = 1;
         break;
       case 'D':
-        for(int d = 0; d < 5
-        ; d++){
+        for(int d = 0; d < 8; d++){
           alternancia();
         }
-      case '0':
-        colorespixel();
+        delay(1000);
+        x = 1;
+        break;
+      case '#':
+        for(int d = 0; d < 20; d++){
+          grupal();
+        }
+        delay(1000);
+        x = 1;
         break;
   }
 }
 
-void colorespixel(){  
-  char key1 = keypad.waitForKey();
-    switch (key1) { // Comprueba la tecla presionada y establece el color correspondiente
-      case '1':
-        color =  RED;
-        break;
-      case '2':
-        color = GREEN;
-        break;
-      case '3':
-        color = BLUE;
-        break;
-      case '4':
-        color = YELLOW;
-        break;
-      case '5':
-        color = MAGENTA;
-        break;
-      case '6':
-        color = CYAN;
-        break;
-      case '7':
-        color = LIM;
-        break;
-    }  
-}
-
-void grupo_patrones(){
-  pixels.clear(); // Apaga todos los píxeles
-  pixels.show(); // Actualiza la tira
-  delay(500); // Espera un poco para el cambio de patrón
-}
-
 //Secuencias
 void ascendente(){ 
-    for(int i = 0; i<14; i++){
+  lcd.setCursor(0,0);
+  lcd.print("--SECUENCIA :D--");
+  lcd.setCursor(0,1);
+  lcd.print(">>>ASCENDENTE<<<");
+  
+    for(int i = 0; i<33; i++){
       pixels.setPixelColor(i,color);
       pixels.show();  //muestro el color en el led
-      delay(200);
+      delay(100);
     } 
-    for(int i = 0; i<14; i++){
+    for(int i = 0; i<33; i++){
       pixels.setPixelColor(i,pixels.Color(0,0,0));
       pixels.show();  //muestro el color en el led
     }
-      delay(200);
+    delay(200);
 }
 
 void descendente(){
-    for(int i = 14; i>=0; i--){
+  lcd.setCursor(0,0);
+  lcd.print("--SECUENCIA :D--");
+  lcd.setCursor(0,1);
+  lcd.print(">>DESCENDENTE<<<");
+  
+    for(int i = 33; i>=0; i--){
       pixels.setPixelColor(i,color);
       pixels.show();  //muestro el color en el led
-      delay(200);
+      delay(100);
     } 
     
-    for(int i = 14; i>=0; i--){
+    for(int i = 33; i>=0; i--){
       pixels.setPixelColor(i,pixels.Color(0,0,0));
       pixels.show();  //muestro el color en el led
     } 
     delay(200);      
 }
 
+void auto_fantastico(){
+  lcd.setCursor(0,0);
+  lcd.print("--SECUENCIA :D--");
+  lcd.setCursor(0,1);
+  lcd.print(">AUTOFANTASTICO<");
+  for(int i = 0; i<33; i++){
+    pixels.setPixelColor(i,color);
+    pixels.show();
+    delay(100);
+  }
+  
+  for(int i = 33; i<=0; i--){
+    pixels.setPixelColor(i,color);
+    pixels.show();
+    delay(100);
+  }
+}
+
 void alternancia(){
+  lcd.setCursor(0,0);
+  lcd.print("--SECUENCIA :D--");
+  lcd.setCursor(0,1);
+  lcd.print(">>ALTERNANCIAS<<");
+  
   //leds pares
-  for(int i = 0; i<14; i=i+2){
+  for(int i = 0; i<33; i=i+2){
     pixels.setPixelColor(i,color);
     pixels.show();  //muestro el color en el led
   } 
-  delay(200);
-  for(int i = 0; i<14; i++){
+  delay(150);
+  for(int i = 0; i<33; i++){
     pixels.setPixelColor(i,pixels.Color(0,0,0));
     pixels.show();  //muestro el color en el led
   }
-  delay(200);
+  delay(150);
   
   //leds inpares
-  for(int i = 1; i<14; i=i+2){
+  for(int i = 1; i<33; i=i+2){
     pixels.setPixelColor(i,color);
     pixels.show();  //muestro el color en el led
   } 
-  delay(200);
-  for(int i = 0; i<14; i++){
+  delay(150);
+  for(int i = 0; i<33; i++){
     pixels.setPixelColor(i,pixels.Color(0,0,0));
     pixels.show();  //muestro el color en el led
   }
-  delay(200); 
+  delay(150); 
 }
+
+void grupal(){
+  randomSeed(analogRead(1)); //generamos una semilla random para los valores que usaremos para variar los colores
+  lcd.setCursor(0,0);
+  lcd.print("--SECUENCIA :D--");
+  lcd.setCursor(0,1);
+  lcd.print(">>>>>GRUPAL<<<<<");
+//valores aleatorios para los colores
+  unsigned long x = random(255);
+  unsigned long y = random(255);
+  unsigned long z = random(255);
+
+  // Enciende todos los LEDs
+  for(int i = 0; i < 33; i++) {
+    pixels.setPixelColor(i, x,y,z); 
+    pixels.show();
+  }
+  delay(100);
+
+  // Apagar todos los LEDs
+  for(int i = 0; i < 33; i++) {
+    pixels.setPixelColor(i, 0); 
+    pixels.show();
+  }
+  delay(100);
+} 
