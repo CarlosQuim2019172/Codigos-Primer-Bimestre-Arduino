@@ -254,16 +254,23 @@ void auto_fantastico(){
   lcd.print("--SECUENCIA :D--");
   lcd.setCursor(0,1);
   lcd.print(">AUTOFANTASTICO<");
+  
   for(int i = 0; i<33; i++){
     pixels.setPixelColor(i,color);
     pixels.show();
-    delay(100);
+    delay(50);
+    pixels.setPixelColor(i,pixels.Color(0,0,0));
+    pixels.show();  //muestro el color en el led
+    delay(50);
   }
   
-  for(int i = 33; i<=0; i--){
+  for(int i = 33; i>0; i--){
     pixels.setPixelColor(i,color);
     pixels.show();
-    delay(100);
+    delay(50);
+    pixels.setPixelColor(i,pixels.Color(0,0,0));
+    pixels.show();  //muestro el color en el led
+    delay(50);
   }
 }
 
