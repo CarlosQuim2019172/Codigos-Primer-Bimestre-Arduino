@@ -5,7 +5,7 @@ Electrónica
 Grado: Quinto
 Sección: A
 Curso: Taller de Electrónica Digital y Reparación de Computadoras I
-Nombre: Grupo ?
+Nombre: Grupo 6
 */
 //Incluimos las librerias necesarias
 #include <Keypad.h>
@@ -70,7 +70,10 @@ void setup() {
   pixels.show();
 }
 
-void loop(){    
+void loop(){  
+
+  randomSeed(analogRead(1)); //generamos una semilla random para los valores que usaremos para variar los colores
+    
   if(x == 1){ //aqui realizamos el llamado de la función para poder escojer el color
     colorespixel();
   }
@@ -306,7 +309,6 @@ void alternancia(){
 }
 
 void grupal(){
-  randomSeed(analogRead(1)); //generamos una semilla random para los valores que usaremos para variar los colores
   lcd.setCursor(0,0);
   lcd.print("--SECUENCIA :D--");
   lcd.setCursor(0,1);
