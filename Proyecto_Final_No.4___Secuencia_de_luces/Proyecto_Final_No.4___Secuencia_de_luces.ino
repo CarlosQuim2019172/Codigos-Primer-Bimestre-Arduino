@@ -72,7 +72,7 @@ void setup() {
 
 void loop(){  
 
-  randomSeed(analogRead(1)); //generamos una semilla random para los valores que usaremos para variar los colores
+  randomSeed(analogRead(1)); //generamos una semilla aleatoria para los valores que usaremos para variar los colores
     
   if(x == 1){ //aqui realizamos el llamado de la función para poder escojer el color
     colorespixel();
@@ -177,38 +177,38 @@ void grupo_secuencias(){ //función donde seleccionamos la secuencia dependiendo
   
   switch(key) {
       case 'A':
-        for(int a = 0; a < 8; a++){
+        for(int a = 0; a < 4; a++){
           ascendente();      
         }
         delay(100);
         x = 1;
         break;
       case 'B':
-        for(int b = 0; b < 8; b++){
+        for(int b = 0; b < 4; b++){
           descendente();
         }
-        delay(1000);
+        delay(100);
         x = 1;
         break;
       case 'C':
-        for(int b = 0; b < 8; b++){
+        for(int b = 0; b < 4; b++){
           auto_fantastico();
         }
-        delay(1000);
+        delay(100);
         x = 1;
         break;
       case 'D':
-        for(int d = 0; d < 8; d++){
+        for(int d = 0; d < 4; d++){
           alternancia();
         }
-        delay(1000);
+        delay(100);
         x = 1;
         break;
       case '#':
-        for(int d = 0; d < 20; d++){
+        for(int d = 0; d < 15; d++){
           grupal();
         }
-        delay(1000);
+        delay(100);
         x = 1;
         break;
   }
