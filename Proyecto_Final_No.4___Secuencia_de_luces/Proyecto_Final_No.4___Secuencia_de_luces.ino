@@ -312,9 +312,9 @@ void grupal(){
   lcd.setCursor(0,1);
   lcd.print(">>>>>GRUPAL<<<<<");
 //valores aleatorios para los colores
-  unsigned long x = random(255);
-  unsigned long y = random(255);
-  unsigned long z = random(255);
+  unsigned long x = random(256);
+  unsigned long y = random(256);
+  unsigned long z = random(256);
 
   // Enciende todos los LEDs
   for(int i = 0; i < 33; i++) {
