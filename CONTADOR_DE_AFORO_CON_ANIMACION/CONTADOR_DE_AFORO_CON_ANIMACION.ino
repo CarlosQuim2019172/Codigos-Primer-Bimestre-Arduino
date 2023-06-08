@@ -10,7 +10,7 @@ Carné: 2019172 
 */
 #include <LiquidCrystal.h>
 #define TRIG 2
-#define ECHO 4                                                  
+#define ECHO 4
 #define BUZ 3
 
 int medicion_Ultrasonico();
@@ -18,7 +18,7 @@ void aforo();
 
 int personas, gente;
 
-LiquidCrystal lcd_quim(5,6,7,8,9,10);
+LiquidCrystal lcd_quim(5, 6, 7, 8, 9, 10);
 
 byte customChar[] = {
   B01110,
@@ -66,7 +66,7 @@ byte barra[] = {
 
 void setup() {
   Serial.begin(9600);
-  lcd_quim.begin(16,2);
+  lcd_quim.begin(16, 2);
   lcd_quim.createChar(0, customChar);
   lcd_quim.createChar(1, customChar1);
   lcd_quim.createChar(2, explosion);
@@ -74,84 +74,84 @@ void setup() {
   lcd_quim.home();
   pinMode(BUZ, OUTPUT);
   pinMode(TRIG, OUTPUT);
-  pinMode(ECHO, INPUT); //PIN de Entrada
-  digitalWrite(TRIG, LOW); //Incializamos el TRIGGER en 0   
+  pinMode(ECHO, INPUT);     //PIN de Entrada
+  digitalWrite(TRIG, LOW);  //Incializamos el TRIGGER en 0
 }
 
 void loop() {
   aforo();
 }
 
-int medicion_Ultrasonico(){
-  long d; //Variable de distancia en cm
-  long t; //Variable de tiempo en llegar al ECHO
+int medicion_Ultrasonico() {
+  long d;  //Variable de distancia en cm
+  long t;  //Variable de tiempo en llegar al ECHO
   digitalWrite(TRIG, HIGH);
-  delayMicroseconds(10); //Pulso de 10us
+  delayMicroseconds(10);  //Pulso de 10us
   digitalWrite(TRIG, LOW);
-  
-  t = pulseIn(ECHO, HIGH); //obtenemos el ancho del pulso
-  d = t/58; //convertimos el tiempo en una distancia en cm
+
+  t = pulseIn(ECHO, HIGH);  //obtenemos el ancho del pulso
+  d = t / 58;               //convertimos el tiempo en una distancia en cm
   return d;
 }
 
-void aforo(){  
+void aforo() {
   personas = medicion_Ultrasonico();
 
-  if(personas >= 6 && personas <=10){
+  if (personas >= 6 && personas <= 10) {
     gente = gente + 1;
     delay(500);
     Serial.println(gente);
   }
-  
-  if(gente <=16){
-  lcd_quim.setCursor(0,0);
-  lcd_quim.print("Aforo:");
-  lcd_quim.setCursor(7,0);
-  lcd_quim.print(gente);
-  }
-  
-  if(gente >= 16){
-  lcd_quim.clear();
-  lcd_quim.setCursor(0,0);
-  lcd_quim.print("    El AFORO    ");
-  lcd_quim.setCursor(0,1);
-  lcd_quim.print("    COMPLETO    ");
-  lcd_quim.setCursor(0,2);
-  // personas con brazos abajo
-  lcd_quim.write(byte(0));
-  lcd_quim.setCursor(15,2);
-  lcd_quim.write(byte(0));
-  delay(500);
-  // personas con brazos arriba
-  lcd_quim.setCursor(0,2);
-  lcd_quim.write(byte(1));
-  lcd_quim.setCursor(15,2);
-  lcd_quim.write(byte(1));
 
-  // barras
-  lcd_quim.setCursor(13,1);
-  lcd_quim.write(byte(3));
-  lcd_quim.setCursor(2,1);
-  lcd_quim.write(byte(3));
-  delay(500);  
-  lcd_quim.setCursor(13,0);
-  lcd_quim.write(byte(3));
-  lcd_quim.setCursor(2,0);
-  lcd_quim.write(byte(3));
-  
-  delay(500);
-  // explocion
-  lcd_quim.setCursor(13,0);
-  lcd_quim.write(byte(2));
-  lcd_quim.setCursor(13,1);
-  lcd_quim.print(" ");
-  lcd_quim.setCursor(2,0);
-  lcd_quim.write(byte(2));
-  lcd_quim.setCursor(2,1);
-  lcd_quim.print(" ");
-  
-  tone(BUZ,260);
-  delay(500);
-  noTone(BUZ);
-  }  
+  if (gente <= 16) {
+    lcd_quim.setCursor(0, 0);
+    lcd_quim.print("Aforo:");
+    lcd_quim.setCursor(7, 0);
+    lcd_quim.print(gente);
+  }
+
+  if (gente >= 16) {
+    lcd_quim.clear();
+    lcd_quim.setCursor(0, 0);
+    lcd_quim.print("    El AFORO    ");
+    lcd_quim.setCursor(0, 1);
+    lcd_quim.print("    COMPLETO    ");
+    lcd_quim.setCursor(0, 2);
+    // personas con brazos abajo
+    lcd_quim.write(byte(0));
+    lcd_quim.setCursor(15, 2);
+    lcd_quim.write(byte(0));
+    delay(500);
+    // personas con brazos arriba
+    lcd_quim.setCursor(0, 2);
+    lcd_quim.write(byte(1));
+    lcd_quim.setCursor(15, 2);
+    lcd_quim.write(byte(1));
+
+    // barras
+    lcd_quim.setCursor(13, 1);
+    lcd_quim.write(byte(3));
+    lcd_quim.setCursor(2, 1);
+    lcd_quim.write(byte(3));
+    delay(500);
+    lcd_quim.setCursor(13, 0);
+    lcd_quim.write(byte(3));
+    lcd_quim.setCursor(2, 0);
+    lcd_quim.write(byte(3));
+
+    delay(500);
+    // explocion
+    lcd_quim.setCursor(13, 0);
+    lcd_quim.write(byte(2));
+    lcd_quim.setCursor(13, 1);
+    lcd_quim.print(" ");
+    lcd_quim.setCursor(2, 0);
+    lcd_quim.write(byte(2));
+    lcd_quim.setCursor(2, 1);
+    lcd_quim.print(" ");
+
+    tone(BUZ, 260);
+    delay(500);
+    noTone(BUZ);
+  }
 }
